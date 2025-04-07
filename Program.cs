@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Security.Cryptography;
 
 namespace Assignment_2
 {
@@ -58,6 +61,7 @@ namespace Assignment_2
         }
 
         // Question 1: Find Missing Numbers in Array
+        // Sorts the array, skips duplicates, and checks gaps between adjacent numbers to find missing values
         public static IList<int> FindMissingNumbers(int[] nums)
         {
             try
@@ -67,12 +71,12 @@ namespace Assignment_2
 
                 for (int i = 0; i < nums.Length - 1; i++)
                 {
-                    if (nums[i] == nums[i + 1]) continue;
+                    if (nums[i] == nums[i + 1]) continue; // skip duplicates
 
                     int diff = nums[i + 1] - nums[i];
                     if (diff > 1) {
                         for (int j = 1; j < diff; j++) { 
-                        lst.Add(nums[i] + j); 
+                        lst.Add(nums[i] + j); // add missing numbers between gaps
                         }
                     }               
                 }
@@ -85,19 +89,21 @@ namespace Assignment_2
         }
 
         // Question 2: Sort Array by Parity
+        //Uses two-pointer approach to place even numbers at the start and odd numbers at the end
         public static int[] SortArrayByParity(int[] nums)
         {
             try
             {
-                int[] res1 = new int[nums.Length];
+                int[] res1 = new int[nums.Length]; // Initialize result array
+
                 int start = 0, end = nums.Length - 1;
 
                 foreach (int num in nums)
                 {
                     if (num % 2 == 0)
-                        res1[start++] = num;
+                        res1[start++] = num; // Place even numbers at the start
                     else
-                        res1[end--] = num;
+                        res1[end--] = num; // Place odd numbers at the end
                 }
 
                 return res1; // Placeholder
@@ -109,6 +115,7 @@ namespace Assignment_2
         }
 
         // Question 3: Two Sum
+        // Uses a dictionary to store indices of numbers and checks for complements
         public static int[] TwoSum(int[] nums, int target)
         {
             try
@@ -118,9 +125,9 @@ namespace Assignment_2
                 {
                     int complement = target - nums[i];
                     if (m1.ContainsKey(complement))
-                        return new int[] { m1[complement], i };
+                        return new int[] { m1[complement], i }; // Found the pair
                     if (!m1.ContainsKey(nums[i]))
-                        m1[nums[i]] = i;
+                        m1[nums[i]] = i; // Store index of the number
                 }
                 return new int[0]; // Placeholder
             }
@@ -131,6 +138,7 @@ namespace Assignment_2
         }
 
         // Question 4: Find Maximum Product of Three Numbers
+        // Sorts the array and calculates the maximum product of three numbers
         public static int MaximumProduct(int[] nums)
         {
             try
@@ -147,15 +155,16 @@ namespace Assignment_2
         }
 
         // Question 5: Decimal to Binary Conversion
+        // Converts a decimal number to binary using division by 2
         public static string DecimalToBinary(int decimalNumber)
         {
             try
             {
-                if (decimalNumber == 0) return "0";
+                if (decimalNumber == 0) return "0"; 
                 string binary1  = "";
                 while (decimalNumber > 0)
                 {
-                    binary1 = (decimalNumber % 2) + binary1;
+                    binary1 = (decimalNumber % 2) + binary1; // Prepend the binary digit
                     decimalNumber /= 2;
                 }
                 return binary1;// Placeholder
@@ -167,18 +176,19 @@ namespace Assignment_2
         }
 
         // Question 6: Find Minimum in Rotated Sorted Array
+        // Uses binary search to find the minimum element in a rotated sorted array
         public static int FindMin(int[] nums)
         {
             try
             {
-                int lft = 0, rght = nums.Length - 1;
+                int lft = 0, rght = nums.Length - 1; 
                 while (lft < rght)
                 {
                     int mid = lft + (rght - lft) / 2;
                     if (nums[mid] > nums[rght])
-                        lft= mid + 1;
+                        lft= mid + 1; // Move left pointer
                     else
-                        rght = mid;
+                        rght = mid;// Move right pointer
                 }
                 return nums[lft]; // Placeholder
             }
@@ -189,16 +199,17 @@ namespace Assignment_2
         }
 
         // Question 7: Palindrome Number
+        // Checks if a number is a palindrome by reversing its digits
         public static bool IsPalindrome(int x)
         {
             try
             {
-                if (x < 0) return false;
+                if (x < 0) return false; // Negative numbers are not palindromes
                 int original = x, reversed = 0;
                 while (x > 0)
                 {
                     int digit = x % 10;
-                    reversed = reversed * 10 + digit;
+                    reversed = reversed * 10 + digit; // Append digit to reversed
                     x /= 10;
                 }
                 return original == reversed; // Placeholder
@@ -210,14 +221,17 @@ namespace Assignment_2
         }
 
         // Question 8: Fibonacci Number
+        // Uses an iterative approach to calculate the nth Fibonacci number
         public static int Fibonacci(int n)
         {
             try
             {
-                if (n == 0) return 0;
-                if (n == 1) return 1;
-                int a = 0, b = 1, c = 0;
-                for (int i = 2; i <= n; i++)
+                if (n == 0) return 0; // Check for base case
+
+
+                if (n == 1) return 1; // Check for base case
+                int a = 0, b = 1, c = 0; 
+                for (int i = 2; i <= n; i++) 
                 {
                     c = a + b;
                     a = b;
